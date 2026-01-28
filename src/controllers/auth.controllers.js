@@ -200,8 +200,12 @@ const logoutUser = asyncHandler(async (req, res) => {
 // ---------------- Resend Email Verification Controller ----------------
 const resendEmailVerification = asyncHandler(async (req, res) => {
     
-  // Find user from database wit the help of req.user set in verifyJWT middleware
-  const user = await userTable.findById(req.user._id);
+  // Getting request from req.body
+  const { email } = req.body;
+
+  // Find user with given email
+  const user = await userTable.findOne({ email });
+  
 
   // If user is not found throw error
   if(!user){
